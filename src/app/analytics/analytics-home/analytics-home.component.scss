@@ -1,0 +1,29 @@
+@import '../../../variables';
+.analytics a.edit-link {
+    cursor: pointer;
+}
+
+.analytics a.edit-link:hover {
+    color: $primary !important;
+}
+
+.head-primary {
+    background-color: $primary;
+}
+
+.admin-actions {
+    background-color: $primary;
+    padding: 15px;
+}
+
+.analytics a.new-item {
+    cursor: pointer;
+}
+
+.head-primary {
+    color: $white;
+}
+
+.btn-success {
+    cursor: pointer;
+}

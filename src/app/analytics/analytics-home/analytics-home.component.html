@@ -1,0 +1,110 @@
+<div>
+
+    <div class="row">
+        <a class="btn btn-secondary" routerLink="/dashboard"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Return to dashboard</a>
+        <div class="col-xs-12 col-md-12 mb-5">
+            <div style="display: block;">
+                <canvas *ngIf="currentData && currentData.length > 0 && standardData && standardData.length > 0" baseChart #baseChart="base-chart" width="400" height="90" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+                    [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <h3>{{isNewItem ? 'Add New Track' : 'Update Track'}}</h3>
+            <form novalidate #f="ngForm" *ngIf="isNewItem || model.id !==''">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Name</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackname" #trackName="ngModel" [(ngModel)]="model.name" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackName.valid" class="help-block alert alert-danger" role="alert">Name is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Date</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackdate" #trackDate="ngModel" [(ngModel)]="model.date" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackDate.valid" class="help-block alert alert-danger" role="alert">Date is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Current</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackcurrent" #trackCurrent="ngModel" [(ngModel)]="model.current" required class="form-control">
+                        <div *ngIf="f.submitted && !trackCurrent.valid" class="help-block alert alert-danger" role="alert">Current is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Standard</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackstandard" #trackStandard="ngModel" [(ngModel)]="model.standard" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackStandard.valid" class="help-block alert alert-danger" role="alert">Standard is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">HB</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackhb" #trackHb="ngModel" [(ngModel)]="model.hb" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackHb.valid" class="help-block alert alert-danger" role="alert">HB is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">KPI1</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackkp1" #trackpi1="ngModel" [(ngModel)]="model.kpi1" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackpi1.valid" class="help-block alert alert-danger" role="alert">KPI1 is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">KPI2</label>
+                    <div class="col-xs col-sm-10">
+                        <input type="text" name="trackkpi2" #trackkpi2="ngModel" [(ngModel)]="model.kpi2" required class="form-control ">
+                        <div *ngIf="f.submitted && !trackkpi2.valid" class="help-block alert alert-danger" role="alert">KPI2 is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <div class="col-sm-10">
+                        <button *ngIf="!isNewItem" (click)=" update(f.form.valid)" class="btn btn-success">Update Track</button>
+                        <button *ngIf="isNewItem" (click)=" addTrack(f.form.valid)" class="btn btn-success">Add Track</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-xs-12 col-md-12 table-responsive">
+            <table class="analytics table ">
+                <thead class="head-primary">
+                    <tr>
+                        <th scope="col"> <a class="new-item" title="New Item" (click)="newItem();"><i class="fa fa-plus-circle" aria-hidden="true"></i> New</a></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Current</th>
+                        <th scope="col">Standard</th>
+                        <th scope="col">HB</th>
+                        <th scope="col">KPI1</th>
+                        <th scope="col">KPI2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of  tracks;trackBy:item?.id;let i = index">
+                        <td>
+                            <a class="edit-link" title="Edit" (click)="edit(item,i);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                        </td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.current}}</td>
+                        <td>{{item.standard}}</td>
+                        <td>{{item.hb}}</td>
+                        <td>{{item.kpi1}}</td>
+                        <td>{{item.kpi2}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,17 @@
+@import '../variables';
+.jumbotron {
+    background-color: $white !important;
+}
+
+.navbar-nav .nav-link {
+    color: $white !important;
+}
+
+.navbar-brand {
+    color: $white !important;
+}
+
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
