@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewContainerRef, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { TrackApiService } from '../../shared/shared';
 import { ITrack } from '../../models/track';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ import animateScrollTo from 'animated-scroll-to';
 })
 export class TrackformComponent implements OnInit {
   @Input() tracks: ITrack[] = [];
-  @Input() isNewItem = false;
+  @Input() isNewItem = false; 
   @Input() model: ITrack = {
     name: '',
     current: '',
@@ -35,11 +35,6 @@ export class TrackformComponent implements OnInit {
     this.resetForm();
   }
 
-  edit(item: ITrack, index: any) {
-    this.model = item;
-    this.itemIndex = index;
-    this.isNewItem = false;
-  }
 
   resetForm() {
     this.model = {
@@ -53,18 +48,17 @@ export class TrackformComponent implements OnInit {
       standard: ''
     };
     this.isNewItem = false;
+
   }
 
-
-
   update(isValid: boolean) {
+
     if (isValid) {
       this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('The track has been updated', 'Notification');
         this.resetForm();
         animateScrollTo(0);
-       // this.loadTracks();
-       this.notify.emit(true);
+        this.notify.emit(true);
         this.isNewItem = false;
       });
     }
@@ -73,6 +67,7 @@ export class TrackformComponent implements OnInit {
   addTrack(isValid: boolean) {
 
     if (isValid) {
+
       if (this.isNewItem) {
         const index = this.tracks.length + 1;
         this.model.id = `${index}`;
@@ -84,10 +79,14 @@ export class TrackformComponent implements OnInit {
         this.resetForm();
         animateScrollTo(0);
         this.notify.emit(true);
-       //   this.loadTracks();
         this.isNewItem = false;
       });
+
     }
+  }
+
+  cancelForm() {
+    this.resetForm();
   }
 
 }
