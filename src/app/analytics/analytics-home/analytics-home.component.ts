@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ViewContainerRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ViewContainerRef, Inject, Input } from '@angular/core';
 import { TrackApiService } from '../../shared/shared';
 import { ITrack } from '../../models/track';
 import { Observable } from 'rxjs/Observable';
@@ -15,50 +15,23 @@ import animateScrollTo from 'animated-scroll-to';
 })
 export class AnalyticsHomeComponent implements OnInit {
   @ViewChild('baseChart') chart: BaseChartDirective;
-
   tracks: ITrack[] = [];
-  itemIndex: any;
+  modelData: ITrack;
   isNewItem = false;
-  buttonText = 'Update';
+  itemIndex: any;
   currentData: Array<any> = [];
   standardData: Array<any> = [];
-  model: ITrack = {
-    name: '',
-    current: '',
-    date: '',
-    hb: '',
-    kpi1: '',
-    id: '',
-    kpi2: '',
-    standard: ''
-  };
 
 
 
-  constructor(public trackApiService: TrackApiService, public toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(public trackApiService: TrackApiService) {
+
   }
 
   ngOnInit() {
-
     this.loadTracks();
-    this.resetForm();
-
   }
 
-  resetForm() {
-    this.model = {
-      name: '',
-      current: '',
-      date: '',
-      hb: '',
-      kpi1: '',
-      id: '',
-      kpi2: '',
-      standard: ''
-    };
-    this.isNewItem = false;
-  }
 
   loadTracks() {
 
@@ -78,63 +51,31 @@ export class AnalyticsHomeComponent implements OnInit {
 
   }
 
+  onNotify(message: boolean): void {
+    if (message) {
+      this.loadTracks();
+      this.isNewItem = false;
+    }
+  }
+
   reloadChart() {
     if (this.chart !== undefined) {
-      this.chart.chart.destroy();
-      this.chart.chart = 0;
       this.chart.datasets = this.lineChartData;
       this.chart.labels = this.lineChartLabels;
-      this.chart.ngOnInit();
       this.chart.chart.update();
-
     }
   }
-
-  edit(item: ITrack, index: any) {
-    this.model = item;
-    this.itemIndex = index;
-    this.isNewItem = false;
-  }
-
-  update(isValid: boolean) {
-    if (isValid) {
-      this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
-        this.toastr.success('The track has been updated', 'Notification');
-        this.resetForm();
-        animateScrollTo(0);
-        this.loadTracks();
-        this.isNewItem = false;
-      });
-    }
-  }
-
 
   newItem() {
-    this.resetForm();
     this.isNewItem = true;
   }
 
-  addTrack(isValid: boolean) {
 
-    if (isValid) {
-      if (this.isNewItem) {
-        const index = this.tracks.length + 1;
-        this.model.id = `${index}`;
-        this.itemIndex = index - 1;
-      }
-
-      this.trackApiService.addTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
-        this.toastr.success('New track has been added', 'Notification');
-        this.resetForm();
-        animateScrollTo(0);
-          this.loadTracks();
-        this.isNewItem = false;
-      });
-    }
+  edit(item: ITrack, index: any) {
+    this.modelData = item;
+    this.itemIndex = index;
+    this.isNewItem = false;
   }
-
-
-
 
   // chart
 
