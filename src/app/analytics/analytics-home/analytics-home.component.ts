@@ -20,7 +20,6 @@ export class AnalyticsHomeComponent implements OnInit {
   @ViewChild('baseChart') chart: BaseChartDirective;
   @ViewChild(TrackformComponent) trackForm;
   tracks: ITrack[] = [];
-  modelData: ITrack;
   currentData: Array<any> = [];
   standardData: Array<any> = [];
 

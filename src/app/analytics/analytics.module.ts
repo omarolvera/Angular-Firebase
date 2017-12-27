@@ -15,9 +15,8 @@ import { TrackformComponent } from './trackform/trackform.component';
     AnalyticsRoutingModule, ChartsModule, ToastModule.forRoot()
   ],
   declarations: [AnalyticsHomeComponent, TrackformComponent],
-  providers: [ 
+  providers: [
     {provide: ToastOptions, useClass: CustomOption},
-  
   ]
 })
 export class AnalyticsModule { }

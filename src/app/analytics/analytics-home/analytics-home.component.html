@@ -8,7 +8,7 @@
                     [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
             </div>
         </div>
-        <app-trackform #tf class="col-xs-12 col-md-4" [tracks]='tracks' [model]='modelData' (notify)='onNotify($event)'></app-trackform>
+        <app-trackform #tf class="col-xs-12 col-md-4" [tracks]='tracks' (notify)='onNotify($event)'></app-trackform>
         <div class="col-xs-12 col-md-12 table-responsive">
             <table class="analytics table ">
                 <thead class="head-primary">

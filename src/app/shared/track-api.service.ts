@@ -13,32 +13,31 @@ import { ITrack } from '../models/track';
 
 @Injectable()
 export class TrackApiService {
-    private baseUrl = 'https://mtech-25ce6.firebaseio.com/'
+    private baseUrl = 'https://mtech-25ce6.firebaseio.com/';
 
     constructor(
         private http: HttpClient) {
 
     }
 
-    getTracks():Observable<ITrack[]> {
-        return  this.http.get<ITrack[]>(`${this.baseUrl}/tracks.json`)
-                .map((res) => res);
-      
+    getTracks(): Observable<ITrack[]> {
+        return this.http.get<ITrack[]>(`${this.baseUrl}/tracks.json`)
+            .map((res) => res);
+
     }
 
     updateTrack(item: ITrack, index: any, isNew: boolean) {
-        let data = JSON.stringify(item);
-        
-            return  this.http.patch(`${this.baseUrl}/tracks/${index}.json`, data)
-                    .map((response) => response)
-         
+        const data = JSON.stringify(item);
+
+        return this.http.patch(`${this.baseUrl}/tracks/${index}.json`, data)
+            .map((response) => response);
+
     }
 
-    addTrack(item: ITrack, index: any, isNew: boolean){
-         let data = JSON.stringify(item);
-          return   this.http.put(`${this.baseUrl}/tracks/${index}.json`,data)
-                    .map((res) => res);
-          
+    addTrack(item: ITrack, index: any, isNew: boolean) {
+        const data = JSON.stringify(item);
+        return this.http.put(`${this.baseUrl}/tracks/${index}.json`, data)
+            .map((res) => res);
     }
 
 }

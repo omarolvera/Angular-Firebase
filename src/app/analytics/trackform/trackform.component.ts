@@ -13,7 +13,7 @@ import animateScrollTo from 'animated-scroll-to';
 })
 export class TrackformComponent implements OnInit {
   @Input() tracks: ITrack[] = [];
-  @Input() isNewItem = false; 
+  @Input() isNewItem = false;
   @Input() model: ITrack = {
     name: '',
     current: '',
