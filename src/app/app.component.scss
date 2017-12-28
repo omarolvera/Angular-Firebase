@@ -3,8 +3,12 @@
     background-color: $white !important;
 }
 
-.navbar-nav .nav-item.active {
-    background: $reverseprimary !important;
+.navbar-nav {
+    .nav-item {
+        &.active {
+            background: $reverseprimary !important;
+        }
+    }
 }
 
 .navbar-nav .nav-link {
