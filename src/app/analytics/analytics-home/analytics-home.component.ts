@@ -5,9 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { BaseChartDirective } from 'ng2-charts';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import animateScrollTo from 'animated-scroll-to';
-// import { TrackformComponent } from '../trackform/trackform.component';
 import { TrackformModalComponent } from '../../modals/trackformModal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -16,10 +15,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./analytics-home.component.scss']
 
 })
-export class AnalyticsHomeComponent implements AfterViewInit, OnInit {
+export class AnalyticsHomeComponent implements  OnInit {
 
   @ViewChild('baseChart') chart: BaseChartDirective;
-  @ViewChild(TrackformModalComponent) trackForm;
+   @ViewChild(TrackformModalComponent) trackForm;
   tracks: ITrack[] = [];
   currentData: Array<any> = [];
   standardData: Array<any> = [];
@@ -62,21 +61,15 @@ export class AnalyticsHomeComponent implements AfterViewInit, OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-
-
-
   constructor(public trackApiService: TrackApiService, private modalService: NgbModal) {
 
   }
 
   ngOnInit() {
     this.loadTracks();
-   
   }
 
-  ngAfterViewInit() {
-   
-  }
+
 
   loadTracks() {
 
@@ -99,7 +92,7 @@ export class AnalyticsHomeComponent implements AfterViewInit, OnInit {
   onNotify(message: boolean): void {
     if (message) {
       this.loadTracks();
-      this.trackForm.isNewItem = false;
+
     }
   }
 
@@ -114,13 +107,13 @@ export class AnalyticsHomeComponent implements AfterViewInit, OnInit {
   newItem() {
 
     const myModal = this.modalService.open(TrackformModalComponent);
+    myModal.componentInstance.resetForm();
+    myModal.componentInstance.isNewItem = true;
     myModal.componentInstance.tracks = this.tracks;
     myModal.result.then(() => {
-      this.trackForm.resetForm();
-      this.trackForm.isNewItem = true;
+      this.loadTracks();
     }, () => {
-      this.trackForm.resetForm();
-      this.trackForm.isNewItem = true;
+
     }
     );
 
@@ -128,18 +121,19 @@ export class AnalyticsHomeComponent implements AfterViewInit, OnInit {
 
 
   edit(item: ITrack, index: any) {
-    this.trackForm.resetForm();
-    this.trackForm.model = item;
-    this.trackForm.itemIndex = index;
-    this.trackForm.isNewItem = false;
 
-    const myModal = this.modalService.open(TrackformModalComponent);
-    myModal.result.then(() => {
-      this.trackForm.resetForm();
-      this.trackForm.isNewItem = true;
+    const myModalForm = this.modalService.open(TrackformModalComponent);
+    myModalForm.componentInstance.resetForm();
+    myModalForm.componentInstance.model = item;
+    myModalForm.componentInstance.itemIndex = index;
+    myModalForm.componentInstance.isNewItem = false;
+
+
+    myModalForm.result.then(() => {
+
+      this.loadTracks();
     }, () => {
-      this.trackForm.resetForm();
-      this.trackForm.isNewItem = true;
+
     }
     );
 

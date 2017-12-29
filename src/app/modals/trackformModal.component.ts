@@ -13,9 +13,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./trackformModal.component.scss']
 })
 export class TrackformModalComponent implements OnInit {
-  @Input() tracks: ITrack[] = [];
-  @Input() isNewItem = false;
-  @Input() model: ITrack = {
+ @Input() tracks: ITrack[] = [];
+ @Input() isNewItem = false;
+ @Input() model: ITrack = {
     name: '',
     current: '',
     date: '',
@@ -33,7 +33,7 @@ export class TrackformModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.resetForm();
+    
   }
 
 
@@ -58,15 +58,14 @@ export class TrackformModalComponent implements OnInit {
       this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('The track has been updated', 'Notification');
         this.resetForm();
-        animateScrollTo(0);
+        //a nimateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();
       },
     () => {
       this.resetForm();
-        animateScrollTo(0);
-      
+       // animateScrollTo(0);
         this.isNewItem = false;
       this.modal.close();
     });
@@ -86,7 +85,7 @@ export class TrackformModalComponent implements OnInit {
       this.trackApiService.addTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('New track has been added', 'Notification');
         this.resetForm();
-        animateScrollTo(0);
+      //  animateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();
