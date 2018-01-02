@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/toPromise';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { catchError } from 'rxjs/operators/catchError';
+import { map  } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 import { ITrack } from '../models/track';
 
 
@@ -20,24 +16,44 @@ export class TrackApiService {
 
     }
 
-    getTracks(): Observable<ITrack[]> {
-        return this.http.get<ITrack[]>(`${this.baseUrl}/tracks.json`)
-            .map((res) => res);
+    getTracks(): Observable<any> {
+        return this.http.get<ITrack[]>(`${this.baseUrl}tracks.json`)
+        .pipe(
+            map((res) => res),
+            catchError(this.handleError('Get tracks', this.baseUrl))
+        );
 
     }
 
     updateTrack(item: ITrack, index: any, isNew: boolean) {
         const data = JSON.stringify(item);
 
-        return this.http.patch(`${this.baseUrl}/tracks/${index}.json`, data)
-            .map((response) => response);
+        return this.http.patch(`${this.baseUrl}tracks/${index}.json`, data)
+        .pipe(
+            map((response) => response),
+            catchError(this.handleError('Update track', this.baseUrl))
+        );
 
     }
 
     addTrack(item: ITrack, index: any, isNew: boolean) {
         const data = JSON.stringify(item);
-        return this.http.put(`${this.baseUrl}/tracks/${index}.json`, data)
-            .map((res) => res);
+        return this.http.put(`${this.baseUrl}tracks/${index}.json`, data)
+        .pipe(
+            map((res) => res),
+            catchError(this.handleError('Add track', this.baseUrl))
+        );
     }
+
+    private handleError(method: String, URL: string): any {
+        return (err: any) => {
+          const errMsg = `error in ${method}() retrieving ${URL}`;
+          console.log(`${errMsg}:`, err);
+          if (err instanceof HttpErrorResponse) {
+            console.log(`status: ${err.status}, ${err.statusText}`);
+          }
+          return Observable.throw(errMsg);
+        };
+      }
 
 }

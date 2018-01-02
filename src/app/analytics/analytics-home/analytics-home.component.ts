@@ -80,10 +80,7 @@ export class AnalyticsHomeComponent implements  OnInit {
       this.tracks.map(a => parseFloat(a.standard)).forEach(x => this.standardData.push(x));
       this.tracks.map(a => parseFloat(a.current)).forEach(x => this.currentData.push(x));
       this.reloadChart();
-    },
-      error => {
-        console.log(<any>error);
-      }
+    }
     );
 
 
@@ -112,10 +109,7 @@ export class AnalyticsHomeComponent implements  OnInit {
     myModal.componentInstance.tracks = this.tracks;
     myModal.result.then(() => {
       this.loadTracks();
-    }, () => {
-
-    }
-    );
+    });
 
   }
 
@@ -132,10 +126,7 @@ export class AnalyticsHomeComponent implements  OnInit {
     myModalForm.result.then(() => {
 
       this.loadTracks();
-    }, () => {
-
-    }
-    );
+    });
 
 
   }
