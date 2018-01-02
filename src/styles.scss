@@ -1,6 +1,7 @@
 /* Add application styles & imports to this file! */
 
 @import 'variables';
+@import 'styles/modules.scss';
 .navbar-toggler {
     color: $white !important;
 }

@@ -10,15 +10,15 @@
 
         <div class="collapse navbar-collapse pull-md-right  text-xs-center" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto ">
-                <li class="nav-item"><a class="nav-link" routerLink="/dashboard">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/analytics">Analytics</a></li>
+                <li class="nav-item" [routerLinkActive]="['active']"><a class="nav-link" routerLink="/dashboard">Dashboard</a></li>
+                <li class="nav-item" [routerLinkActive]="['active']"><a class="nav-link" routerLink="/analytics">Analytics</a></li>
 
             </ul>
         </div>
     </nav>
 
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="jumbotron">
             <router-outlet></router-outlet>
         </div>
