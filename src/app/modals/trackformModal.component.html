@@ -1,62 +1,57 @@
-<div class="modal-header">
-    <h3 *ngIf="isNewItem || model.id !==''">{{isNewItem ? 'Add New Track' : 'Update Track'}}</h3>
-</div>
-<div class="modal-body">
-    <form novalidate #f="ngForm">
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">Name</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackname" #trackName="ngModel" [(ngModel)]="model.name" required class="form-control ">
-                <div *ngIf="f.submitted && !trackName.valid" class="help-block alert alert-danger" role="alert">Name is required</div>
+<div class="trackform">
+    <div class="modal-header">
+        <h3 *ngIf="isNewItem || model.id !==''">{{isNewItem ? 'Add New Track' : 'Update Track'}}</h3>
+    </div>
+    <div class="modal-body">
+        <form novalidate #f="ngForm" name="trackForm" role="form">
+            <div class="form-group row">
+                <label class="col-sm-2  col-form-label">Name</label>
+                <div class="col-xs col-sm-10 ">
+                    <input type="text" name="trackname" [ngClass]="{'required-field': trackName.errors && submitted}" #trackName="ngModel" [(ngModel)]="model.name" required class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">Date</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackdate" #trackDate="ngModel" [(ngModel)]="model.date" required class="form-control ">
-                <div *ngIf="f.submitted && !trackDate.valid" class="help-block alert alert-danger" role="alert">Date is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Date</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackdate" #trackDate="ngModel" [ngClass]="{'required-field': trackDate.errors && submitted}" [(ngModel)]="model.date" required class="form-control ">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Current</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackcurrent" #trackCurrent="ngModel" [(ngModel)]="model.current" required class="form-control">
-                <div *ngIf="f.submitted && !trackCurrent.valid" class="help-block alert alert-danger" role="alert">Current is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Current</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackcurrent" #trackCurrent="ngModel" [ngClass]="{'required-field': trackCurrent.errors && submitted}" [(ngModel)]="model.current" required class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">Standard</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackstandard" #trackStandard="ngModel" [(ngModel)]="model.standard" required class="form-control ">
-                <div *ngIf="f.submitted && !trackStandard.valid" class="help-block alert alert-danger" role="alert">Standard is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">Standard</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackstandard" #trackStandard="ngModel" [ngClass]="{'required-field': trackStandard.errors && submitted}" [(ngModel)]="model.standard" required class="form-control ">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">HB</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackhb" #trackHb="ngModel" [(ngModel)]="model.hb" required class="form-control ">
-                <div *ngIf="f.submitted && !trackHb.valid" class="help-block alert alert-danger" role="alert">HB is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">HB</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackhb" #trackHb="ngModel" [ngClass]="{'required-field': trackHb.errors && submitted}" [(ngModel)]="model.hb" required class="form-control ">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">KPI1</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackkp1" #trackpi1="ngModel" [(ngModel)]="model.kpi1" required class="form-control ">
-                <div *ngIf="f.submitted && !trackpi1.valid" class="help-block alert alert-danger" role="alert">KPI1 is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">KPI1</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackkp1" #trackpi1="ngModel" [ngClass]="{'required-field': trackpi1.errors && submitted}" [(ngModel)]="model.kpi1" required class="form-control ">
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label ">KPI2</label>
-            <div class="col-xs col-sm-10">
-                <input type="text" name="trackkpi2" #trackkpi2="ngModel" [(ngModel)]="model.kpi2" required class="form-control ">
-                <div *ngIf="f.submitted && !trackkpi2.valid" class="help-block alert alert-danger" role="alert">KPI2 is required</div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label ">KPI2</label>
+                <div class="col-xs col-sm-10">
+                    <input type="text" name="trackkpi2" #trackkpi2="ngModel" [ngClass]="{'required-field': trackkpi2.errors && submitted}" [(ngModel)]="model.kpi2" required class="form-control ">
+                </div>
             </div>
-        </div>
 
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="submit" *ngIf="!isNewItem" (click)=" update(f.form.valid)" class="btn btn-success">Update Track</button>
-    <button type="submit" *ngIf="isNewItem" (click)=" addTrack(f.form.valid)" class="btn btn-success">Add Track</button>
-    <button type="button" (click)="cancelForm()" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" *ngIf="!isNewItem" (click)="update(f.form.valid)" class="btn btn-success">Update Track</button>
+        <button type="submit" *ngIf="isNewItem" (click)="addTrack(f.form.valid)" class="btn btn-success">Add Track</button>
+        <button type="button" (click)="cancelForm()" class="btn btn-secondary">Cancel</button>
+    </div>
 </div>

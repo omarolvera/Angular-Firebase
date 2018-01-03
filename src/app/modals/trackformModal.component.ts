@@ -27,13 +27,13 @@ export class TrackformModalComponent implements OnInit {
   };
   @Input() itemIndex: any;
   @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
+  submitted = false;
 
   constructor(public trackApiService: TrackApiService, public toastr: ToastsManager, vcr: ViewContainerRef, private modal: NgbActiveModal) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
-    
   }
 
 
@@ -53,19 +53,18 @@ export class TrackformModalComponent implements OnInit {
   }
 
   update(isValid: boolean) {
+  this.submitted = true;
 
     if (isValid) {
       this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('The track has been updated', 'Notification');
         this.resetForm();
-        //a nimateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();
       },
     () => {
       this.resetForm();
-       // animateScrollTo(0);
         this.isNewItem = false;
       this.modal.close();
     });
@@ -73,7 +72,7 @@ export class TrackformModalComponent implements OnInit {
   }
 
   addTrack(isValid: boolean) {
-
+    this.submitted = true;
     if (isValid) {
 
       if (this.isNewItem) {
@@ -85,7 +84,6 @@ export class TrackformModalComponent implements OnInit {
       this.trackApiService.addTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('New track has been added', 'Notification');
         this.resetForm();
-      //  animateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();

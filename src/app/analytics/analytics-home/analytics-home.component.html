@@ -1,8 +1,7 @@
 <div>
-
     <div class="row">
-        <a class="btn btn-secondary" routerLink="/dashboard"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Return to dashboard</a>
         <div class="col-xs-12 col-md-12 mb-5 chart-wrapper">
+            <a class="btn btn-secondary" routerLink="/dashboard"> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Return to dashboard</a>
             <div style="display: block;">
                 <canvas *ngIf="currentData && currentData.length > 0 && standardData && standardData.length > 0" baseChart #baseChart="base-chart" width="400" height="90" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
                     [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
@@ -41,7 +40,4 @@
             </table>
         </div>
     </div>
-
-
-
 </div>

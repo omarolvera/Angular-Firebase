@@ -1,0 +1,12 @@
+@import '../../variables';
+.trackform {
+    .required {
+        color: $error;
+    }
+    .required-field {
+        border: 1px solid $error;
+    }
+    .btn-secondary {
+        cursor: pointer;
+    }
+}
