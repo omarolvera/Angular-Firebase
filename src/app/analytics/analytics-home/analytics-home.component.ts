@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ViewContainerRef, Inject, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, Inject, Input, AfterViewInit } from '@angular/core';
 import { TrackApiService } from '../../shared/shared';
 import { ITrack } from '../../models/track';
 import { Observable } from 'rxjs/Observable';
@@ -15,10 +15,10 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./analytics-home.component.scss']
 
 })
-export class AnalyticsHomeComponent implements  OnInit {
+export class AnalyticsHomeComponent implements OnInit {
 
   @ViewChild('baseChart') chart: BaseChartDirective;
-   @ViewChild(TrackformModalComponent) trackForm;
+  @ViewChild(TrackformModalComponent) trackForm;
   tracks: ITrack[] = [];
   currentData: Array<any> = [];
   standardData: Array<any> = [];
@@ -61,8 +61,8 @@ export class AnalyticsHomeComponent implements  OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  constructor(public trackApiService: TrackApiService, private modalService: NgbModal) {
-
+  constructor(public trackApiService: TrackApiService, private modalService: NgbModal,  public toastr: ToastsManager) {
+    
   }
 
   ngOnInit() {
@@ -86,12 +86,6 @@ export class AnalyticsHomeComponent implements  OnInit {
 
   }
 
-  onNotify(message: boolean): void {
-    if (message) {
-      this.loadTracks();
-
-    }
-  }
 
   reloadChart() {
     if (this.chart !== undefined) {
@@ -107,8 +101,11 @@ export class AnalyticsHomeComponent implements  OnInit {
     myModal.componentInstance.resetForm();
     myModal.componentInstance.isNewItem = true;
     myModal.componentInstance.tracks = this.tracks;
-    myModal.result.then(() => {
+    myModal.result.then((result) => {
       this.loadTracks();
+      this.toastr.success('New track has been added', 'Notification');
+    }, (reason) => {
+
     });
 
   }
@@ -123,9 +120,10 @@ export class AnalyticsHomeComponent implements  OnInit {
     myModalForm.componentInstance.isNewItem = false;
 
 
-    myModalForm.result.then(() => {
-
+    myModalForm.result.then((result) => {
       this.loadTracks();
+      this.toastr.success('The track has been updated', 'Notification');
+    }, (reason) => {
     });
 
 

@@ -13,9 +13,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./trackformModal.component.scss']
 })
 export class TrackformModalComponent implements OnInit {
- @Input() tracks: ITrack[] = [];
- @Input() isNewItem = false;
- @Input() model: ITrack = {
+  @Input() tracks: ITrack[] = [];
+  @Input() isNewItem = false;
+  @Input() model: ITrack = {
     name: '',
     current: '',
     date: '',
@@ -26,7 +26,7 @@ export class TrackformModalComponent implements OnInit {
     standard: ''
   };
   @Input() itemIndex: any;
-  @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
+  // @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
   submitted = false;
 
   constructor(public trackApiService: TrackApiService, public toastr: ToastsManager, vcr: ViewContainerRef, private modal: NgbActiveModal) {
@@ -53,21 +53,21 @@ export class TrackformModalComponent implements OnInit {
   }
 
   update(isValid: boolean) {
-  this.submitted = true;
+    this.submitted = true;
 
     if (isValid) {
       this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('The track has been updated', 'Notification');
         this.resetForm();
-        this.notify.emit(true);
+        //  this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();
       },
-    () => {
-      this.resetForm();
-        this.isNewItem = false;
-      this.modal.close();
-    });
+        () => {
+          this.resetForm();
+          this.isNewItem = false;
+          this.modal.dismiss();
+        });
     }
   }
 
@@ -84,13 +84,13 @@ export class TrackformModalComponent implements OnInit {
       this.trackApiService.addTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
         this.toastr.success('New track has been added', 'Notification');
         this.resetForm();
-        this.notify.emit(true);
+        // this.notify.emit(true);
         this.isNewItem = false;
         this.modal.close();
       }, () => {
         this.resetForm();
         this.isNewItem = false;
-        this.modal.close();
+        this.modal.dismiss();
       });
 
     }
@@ -98,7 +98,7 @@ export class TrackformModalComponent implements OnInit {
 
   cancelForm() {
     this.resetForm();
-    this.modal.close();
+    this.modal.dismiss();
   }
 
 }

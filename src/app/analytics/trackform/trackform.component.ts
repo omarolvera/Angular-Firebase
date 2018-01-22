@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewContainerRef, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { TrackApiService } from '../../shared/shared';
 import { ITrack } from '../../models/track';
 import { Observable } from 'rxjs/Observable';
@@ -27,8 +27,8 @@ export class TrackformComponent implements OnInit {
   @Input() itemIndex: any;
   @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public trackApiService: TrackApiService, public toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+  constructor(public trackApiService: TrackApiService) {
+  
   }
 
   ngOnInit() {
@@ -55,9 +55,9 @@ export class TrackformComponent implements OnInit {
 
     if (isValid) {
       this.trackApiService.updateTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
-        this.toastr.success('The track has been updated', 'Notification');
+       
+     
         this.resetForm();
-        animateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
       });
@@ -75,9 +75,8 @@ export class TrackformComponent implements OnInit {
       }
 
       this.trackApiService.addTrack(this.model, this.itemIndex, this.isNewItem).subscribe((response) => {
-        this.toastr.success('New track has been added', 'Notification');
+       
         this.resetForm();
-        animateScrollTo(0);
         this.notify.emit(true);
         this.isNewItem = false;
       });
